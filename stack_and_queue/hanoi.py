@@ -43,7 +43,7 @@ def hanoi_stack(num, left="left", mid="mid", right="right"):
     left_stack.push(sys.maxsize)
     mid_stack.push(sys.maxsize)
     right_stack.push(sys.maxsize)
-    for i in range(num,0,-1):
+    for i in range(num, 0, -1):
         left_stack.push(i)
     record_action = [Action.No]
     step = 0
@@ -76,12 +76,16 @@ def stack_to_stack_process(record_action, current_action, against_action, source
 
 
 def hanoi_recurrence(num, left="left", mid="mid", right="right"):
-    if num < 1 :
+    if num < 1:
         return 0
     return recurrence_process(num, left, mid, right, left, right)
 
 
 def recurrence_process(num, left="left", mid="mid", right="right", source="left", destination="right"):
+    """
+
+    :rtype: int
+    """
     if num == 1:
         if source == "mid" or destination == "mid":
             print("Move 1 from %s to %s" % (source, destination))
@@ -106,4 +110,3 @@ def recurrence_process(num, left="left", mid="mid", right="right", source="left"
         print("Move %s from %s to %s" % (num, mid, destination))
         step_part5 = recurrence_process(num-1, left, mid, right, source, destination)
         return step_part1 + step_part2 + step_part3 + step_part4 + step_part5
-
