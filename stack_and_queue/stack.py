@@ -101,29 +101,29 @@ class TwoStackQueue:
         return self.__pop.peek()
 
 
-def sort_stack_depend_stack(oriStack):
+def sort_stack_depend_stack(ori_stack):
     """
     借助一个辅助栈完成对原始栈的排序，栈顶到栈底从大到小排序
-    :param oriStack: 原始未排序的栈
+    :param ori_stack: 原始未排序的栈
     :return: 栈顶到栈底从大到小已经排序好的栈
     """
-    if oriStack.is_empty():
+    if ori_stack.is_empty():
         # raise RuntimeError("stack is empty!!!")
-        return oriStack
-    helpStack = Stack()
-    helpStack.push(oriStack.pop())
-    while not oriStack.is_empty():
-        tmp = oriStack.pop()
-        while not helpStack.is_empty() and tmp < helpStack.peek():
-            oriStack.push(helpStack.pop())
-        helpStack.push(tmp)
-    return helpStack
-    #     while not helpStack.is_empty() and tmp > helpStack.peek():
-    #         oriStack.push(helpStack.pop())
-    #     helpStack.push(tmp)
-    # while not helpStack.is_empty():
-    #     oriStack.push(helpStack.pop())
-    # return oriStack
+        return ori_stack
+    help_stack = Stack()
+    help_stack.push(ori_stack.pop())
+    while not ori_stack.is_empty():
+        tmp = ori_stack.pop()
+        while not help_stack.is_empty() and tmp < help_stack.peek():
+            ori_stack.push(help_stack.pop())
+        help_stack.push(tmp)
+    return help_stack
+    #     while not help_stack.is_empty() and tmp > help_stack.peek():
+    #         ori_stack.push(help_stack.pop())
+    #     help_stack.push(tmp)
+    # while not help_stack.is_empty():
+    #     ori_stack.push(help_stack.pop())
+    # return ori_stack
 
 
 if __name__ == "__main__":

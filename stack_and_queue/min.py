@@ -17,7 +17,7 @@
 思路:创建两个栈，一个存放数据，一个存放当前最小元素
 """
 
-from struct import Stack
+from stack import Stack
 
 __all__ = ["MinImplementation1", "MinImplementation2"]
 

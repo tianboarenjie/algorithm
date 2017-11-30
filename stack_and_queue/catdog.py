@@ -21,7 +21,7 @@
 6.调用is_dog_empty检查队列中是否还有dog类实例
 7.调用is_cat_empty检查队列中是否还有cat类实例
 """
-
+__all__ = ["PetElement", "Pet", "PetQueue"]
 
 class Pet:
     def __init__(self, ptype):

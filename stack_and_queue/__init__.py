@@ -12,5 +12,7 @@
 @File:              __init__.py.py 
 @Time:              11/26/17 8:08 PM 
 """
-from .struct import *
+from .stack import *
 from .min import *
+from .catdog import *
+from .hanoi import *

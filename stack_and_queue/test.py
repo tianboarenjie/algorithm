@@ -13,7 +13,8 @@
 @Time:              11/26/17 10:21 PM 
 """
 from min import MinImplementation1, MinImplementation2
-from struct import Stack,TwoStackQueue
+from stack import Stack,TwoStackQueue
+from .hanoi import hanoi_stack
 
 
 def min():
@@ -71,7 +72,8 @@ def reverse():
 def main():
     # min()
     # two_stack_queue()
-    reverse()
+    # reverse()
+    print("hanoi 3 total: %s" % hanoi_stack(3))
 
 if __name__ == "__main__":
     main()
