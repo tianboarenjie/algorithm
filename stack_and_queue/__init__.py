@@ -16,3 +16,7 @@ from .stack import *
 from .min import *
 from .catdog import *
 from .hanoi import *
+from .maxrec import *
+from .maxtree import *
+from .maxwin import *
+from .num import *
