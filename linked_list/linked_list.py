@@ -63,8 +63,9 @@ class Node:
         if k == 0:
             cur = cur.next
         if k < 0:
+            tmp = cur
             while k+1 != 0:
                 k += 1
-                cur = cur.next
-            cur.next = cur.next.next
+                tmp = tmp.next
+            tmp.next = tmp.next.next
         return cur
