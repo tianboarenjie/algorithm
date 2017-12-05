@@ -13,7 +13,7 @@
 @Time:              17-12-5 下午10:20 
 """
 __all__ = ["Node"]
-
+import copy
 
 class Node:
 
@@ -48,7 +48,7 @@ class Node:
         遍历单链表,同时k递减,根据遍历完成后的k值判断需要删除的倒数第k个节点,n为单链表长度
             1.k大于0,表明倒数第k个节点不存在,直接返回原单链表
             2.k等于0,表明倒数第k个节点就是单链表头节点,返回self.next即可
-            3.k小于0,可知需要删除的节点的前一个节点是n-k-1个节点,第一次遍历k的值是k-n,故此第二次遍历到k不断加1直至为-1时即可
+            3.k小于0,可知需要删除的节点的前一个节点是n-k-1个节点,第一次遍历k的值是k-n,故此第二次遍历到k不断加1直至为0时即可
         :type k: int
         :param k:
         :return:
@@ -59,15 +59,12 @@ class Node:
         while cur is not None:
             cur = cur.next
             k -= 1
+        cur = copy.deepcopy(self)
         if k == 0:
             cur = cur.next
-        if k == -1:
-            cur.next = cur.next.next
-        if k < -1:
-            while k != -1:
+        if k < 0:
+            while k+1 != 0:
                 k += 1
                 cur = cur.next
             cur.next = cur.next.next
         return cur
-
-
