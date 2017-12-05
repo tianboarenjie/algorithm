@@ -61,11 +61,13 @@ class Node:
             k -= 1
         if k == 0:
             cur = cur.next
-        if k <= -1:
+        if k == -1:
+            cur.next = cur.next.next
+        if k < -1:
             while k != -1:
                 k += 1
                 cur = cur.next
-            cur.next = cur.next.next
+
         return cur
 
 
