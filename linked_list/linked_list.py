@@ -67,7 +67,7 @@ class Node:
             while k != -1:
                 k += 1
                 cur = cur.next
-
+            cur.next = cur.next.next
         return cur
 
 
