@@ -22,8 +22,8 @@
     3.删除之后把剩下节点继续连成环状,继续报数删除(重复1和2步),直到只剩下1个节点
 进阶：如果链表节点数为N,想在时间复杂度为O(N)时完成原问题的要求,该怎么实现？
     1.普通解法时间复杂度为O(n*m),需要遍历m次删除节点数为n-1,之所以花费这么多时间是因为不知道最终哪个节点会存活下来,所以改进
-    解法就是快速找到最总存货的节点,直接返回即可.
-    2.
+    解法就是快速找到最终存活的节点,直接返回即可.
+    2.找到删除
 """
 import copy
 from linked_list import Node
@@ -61,7 +61,7 @@ def advance_josephus(head, m):
     def get_result(l, i):
         if l == 1:
             return 1
-        return (get_result(l-1, m) + m - 1) % i + 1
+        return (get_result(l-1, i) + i - 1) % l + 1
 
     if head is None or head.next is head or m < 1:
         return head
