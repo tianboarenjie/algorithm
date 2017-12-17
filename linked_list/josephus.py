@@ -70,9 +70,10 @@ def advance_josephus(head, m):
     while cur is not None:
         size += 1
         cur = cur.next
-    result = get_result(size, m)-1
-    while result != 0:
+    tmp = get_result(size, m)-1
+    while tmp != 0:
         head = head.next
+        tmp -= 1
     head.next = head
     return head
 
