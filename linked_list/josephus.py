@@ -77,6 +77,5 @@ def advance_josephus(head, m):
     return head
 
 
-
 if __name__ == "__main__":
     pass
