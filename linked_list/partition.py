@@ -25,6 +25,7 @@ from linked_list import Node
 def partition_by_pivot(head, pivot):
     """
     将链表按照某个值划分成左边小,中间相等,右边大的形式
+    :type head: Node
     :param head: 需要划分的链表
     :param pivot: 划分参考
     :return:
@@ -38,7 +39,6 @@ def partition_by_pivot(head, pivot):
     equ_head = None
     equ_tail = None
     big_head = None
-    result = None
     while cur is not None:
         next = cur.next
         cur.next = None

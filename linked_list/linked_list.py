@@ -16,6 +16,7 @@ __all__ = ["Node", "DoubleNode"]
 import copy
 import math
 
+
 class Node:
 
     __slots__ = ["__value", "__next"]
@@ -30,10 +31,10 @@ class Node:
 
     @value.setter
     def value(self, value):
-        if isinstance(value, int):
+        if isinstance(value, int) and value in range(0, 10):
             self.__value = value
         else:
-            raise TypeError("must be int object!")
+            raise TypeError("must be int object, greater than 0 and less than 10!")
 
     @property
     def next(self):
