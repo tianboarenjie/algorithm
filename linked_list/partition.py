@@ -40,7 +40,7 @@ def partition_by_pivot(head, pivot):
     equ_tail = None
     big_head = None
     while cur is not None:
-        next = cur.next
+        follow = cur.next
         cur.next = None
         if cur.value < pivot:
             if sma_head is None:
@@ -61,7 +61,7 @@ def partition_by_pivot(head, pivot):
                 big_head = cur
             else:
                 big_head.next = cur
-        cur = next
+        cur = follow
     # 按照小值链表->等值链表->大值链表顺序拼接链表
     if sma_tail is not None:
         sma_tail.next = equ_head

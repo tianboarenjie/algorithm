@@ -52,8 +52,8 @@ class Node:
         return self.__next
 
     @next.setter
-    def next(self, next):
-        self.__next = next
+    def next(self, follow):
+        self.__next = follow
 
     @property
     def rand(self):
@@ -74,31 +74,30 @@ def copy_rand_list(head):
     if head is None:
         return None
     cur = head
-    next = None
     while cur:
         # 每个节点后插入该节点的拷贝
-        next = cur.next
+        follow = cur.next
         cur.next = Node(cur.value)
-        cur.next.next = next
-        cur = next
+        cur.next.next = follow
+        cur = follow
     cur = head
     cur_copy = None
     while cur:
         # 开始第二次遍历,完成每个拷贝节点cur_copy的rand指向
-        next = cur.next.next
+        follow = cur.next.next
         cur_copy = cur.next
         cur_copy.rand = cur.rand.next if cur.rand else None
-        cur = next
+        cur = follow
     # 记录拷贝节点的头节点
     result = head.next
     cur = head
     while cur:
         # 第三次遍历,完成拷贝节点的next指向,拆分新构链表
-        next = cur.next.next
+        follow = cur.next.next
         cur_copy = cur.next
-        cur_copy.next = next.next if next else None
-        cur.next = next
-        cur = next
+        cur_copy.next = follow.next if follow else None
+        cur.next = follow
+        cur = follow
     return result
 
 

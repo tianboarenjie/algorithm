@@ -78,12 +78,12 @@ def remove_node(node):
     """
     if node is None:
         return
-    next = node.next
-    if next is None:
+    follow = node.next
+    if follow is None:
         node.value = None
     else:
-        node.value = next.value
-        node.next = next.next
+        node.value = follow.value
+        node.next = follow.next
 
 
 if __name__ == "__main__":

@@ -46,9 +46,9 @@ def reverse_depend_list(head_node, k):
         if pre_node is not None:
             pre_node.next = cur
         while len(cur_list):
-            next = cur_list.pop()
-            cur.next = next
-            cur = next
+            follow = cur_list.pop()
+            cur.next = follow
+            cur = follow
         cur.next = next_node
         return cur
 
@@ -81,19 +81,19 @@ def reverse(head_node, k):
         """
         :type pre_node:Node
         :type start_node:Node
-        :type next_node:Node
+        :type end_node:Node
         :param pre_node:
         :param start_node:
-        :param next_node:
+        :param end_node:
         :return:
         """
         cur = start_node.next
         start_node.next = end_node.next
         while cur != end_node:
-            next = cur.next
+            follow = cur.next
             cur.next = start_node
             start_node = cur
-            cur = next
+            cur = follow
         if pre_node is not None:
             pre_node.next = end_node
 
@@ -104,13 +104,13 @@ def reverse(head_node, k):
     pre = None
     while cur:
         count += 1
-        next = cur.next
+        follow = cur.next
         if count == k:
             start = head_node if pre is None else pre.next
-            reverse_resign(pre, start, next)
+            reverse_resign(pre, start, follow)
             pre = start
             count = 0
-        cur = next
+        cur = follow
     return head_node
 
 

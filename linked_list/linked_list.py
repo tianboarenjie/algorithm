@@ -30,9 +30,9 @@ class Node:
         return self.__value
 
     @value.setter
-    def value(self, value):
-        if isinstance(value, int) and value in range(0, 10):
-            self.__value = value
+    def value(self, value_int):
+        if isinstance(value_int, int) and value_int in range(0, 10):
+            self.__value = value_int
         else:
             raise TypeError("must be int object, greater than 0 and less than 10!")
 
@@ -41,8 +41,8 @@ class Node:
         return self.__next
 
     @next.setter
-    def next(self, next):
-        self.__next = next
+    def next(self, next_node):
+        self.__next = next_node
 
     def reverse(self):
         """
@@ -51,12 +51,11 @@ class Node:
         """
         cp = copy.deepcopy(self)
         pre = None
-        next = None
         while cp is not None:
-            next = cp.next
+            follow = cp.next
             cp.next = pre
             pre = cp
-            cp = next
+            cp = follow
         return pre
 
     def remove_middle(self):
@@ -142,9 +141,9 @@ class DoubleNode:
         return self.__value
 
     @value.setter
-    def value(self, value):
-        if isinstance(value, int):
-            self.__value = value
+    def value(self, value_int):
+        if isinstance(value_int, int):
+            self.__value = value_int
         else:
             raise TypeError("must be int object!")
 
@@ -153,16 +152,16 @@ class DoubleNode:
         return self.__pre
 
     @pre.setter
-    def pre(self, pre):
-        self.__pre = pre
+    def pre(self, pre_node):
+        self.__pre = pre_node
 
     @property
     def next(self):
         return self.__next
 
     @next.setter
-    def next(self, next):
-        self.__next = next
+    def next(self, next_node):
+        self.__next = next_node
 
     def reverse_part(self, start, end):
         """
@@ -175,15 +174,15 @@ class DoubleNode:
         :param end:
         :return:
         """
-        len = 0
+        lnh = 0
         cp = copy.deepcopy(self)
         tmp = cp
         node_pre = None
         node_next = None
         while tmp is not None:
-            len += 1
-            node_pre = tmp if len == start-1 else node_pre
-            node_next = tmp if len == end+1 else node_next
+            lnh += 1
+            node_pre = tmp if lnh == start-1 else node_pre
+            node_next = tmp if lnh == end+1 else node_next
             tmp = tmp.next
         cur = cp if node_pre is None else node_pre.next
         node = cur.next
@@ -206,13 +205,12 @@ class DoubleNode:
         """
         cp = copy.deepcopy(self)
         pre = None
-        next = None
         while cp is not None:
-            next = cp.next
+            follow = cp.next
             cp.next = pre
-            cp.pre = next
+            cp.pre = follow
             pre = cp
-            cp = next
+            cp = follow
         return pre
 
     def remove_reciprocal(self, k):
@@ -231,7 +229,7 @@ class DoubleNode:
         # fast预先遍历到第k个节点
         fast = self
         while k > 0:
-            if fast == None:
+            if fast is None:
                 return self
             else:
                 fast = fast.next
@@ -242,7 +240,7 @@ class DoubleNode:
             cur.pre = None
         cur = copy.deepcopy(self)
         slow = cur
-        while fast.next != None:
+        while fast.next:
             fast = fast.next
             slow = slow.next
         slow.next = slow.next.next

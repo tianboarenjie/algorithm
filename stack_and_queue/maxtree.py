@@ -59,7 +59,7 @@ def get_max_tree(ori_list):
         # rb_dict[cur] = None
         pop_stack_to_map(stack, lb_dict)
 
-    for i in range(len(nodes)-1,-1,-1):
+    for i in range(len(nodes)-1, -1, -1):
         cur_node = nodes[i]
         while stack and stack[-1].value() < cur_node.value():
             pop_stack_to_map(stack, rb_dict)

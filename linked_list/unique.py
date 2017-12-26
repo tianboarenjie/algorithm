@@ -54,13 +54,13 @@ def unique_by_sort(head_node):
     cur = head_node
     while cur:
         pre = cur
-        next = pre.next
-        while next:
-            if next.value == cur.value:
-                pre.next = next.next
+        follow = pre.next
+        while follow:
+            if follow.value == cur.value:
+                pre.next = follow.next
             else:
-                pre = next
-            next = pre.next
+                pre = follow
+            follow = pre.next
         cur = cur.next
     return head_node
 

@@ -10,17 +10,6 @@
 @Software:          PyCharm 
 @Project:           py363_algorithm
 @File:              __init__.py.py 
-@Time:              17-12-5 下午9:51 
+@Time:              17-12-24 下午9:50 
 """
-from .add import *
-from .copy import *
-from .common import *
-from .convert import *
-from .intersection import *
-from .josephus import *
-from .knodesreverse import *
-from .linked_list import *
-from .palindrome import *
-from .partition import *
-from .sort import *
-from .unique import *
+from .traversal import *
