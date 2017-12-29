@@ -10,9 +10,8 @@
 @Software:          PyCharm 
 @Project:           py363_algorithm
 @File:              __init__.py.py 
-@Time:              17-12-24 下午9:50 
+@Time:              17-12-27 下午11:27 
 """
-from .traversal import *
-from .traversal import *
-from .presentation_tree import *
-from .serialization import *
+
+if __name__ == "__main__":
+    pass

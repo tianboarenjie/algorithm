@@ -292,43 +292,34 @@ def postorder_traversal_morris(binary_tree):
     :return:
     """
 
-    def reverse_partition(start, end):
+    def reverse_partition(head):
         """
         反转从start到end节点
-        :type start:Node
-        :type end:Node
-        :param start:
-        :param end:
+        :type head:Node
+        :param head:
         :return:
         """
-        if start == end:
-            return
-        cur = start.right
-        while True:
-            follow = cur.right
-            cur.right = start
-            start = cur
-            cur = follow
-            if start == end:
-                break
+        pre = None
+        while head:
+            next = head.right
+            head.right = pre
+            pre = head
+            head = next
+        return pre
 
-    def print_right_edge(start, end):
+    def print_right_edge(head):
         """
         打印从start开始到end节点值
-        :type start:Node
-        :type end:Node
-        :param start:
-        :param end:
+        :type head:Node
+        :param head:
         :return:
         """
-        reverse_partition(start, end)
-        cur = end
-        while True:
+        tail = reverse_partition(head)
+        cur = tail
+        while cur:
             print("Node value: %10.10s" % cur.value)
-            if cur == start:
-                break
             cur = cur.right
-        reverse_partition(end, start)
+        reverse_partition(tail)
 
     if binary_tree is None:
         return binary_tree
@@ -346,8 +337,8 @@ def postorder_traversal_morris(binary_tree):
                 pre.right = cur
                 cur = cur.left
             else:
-                print_right_edge(cur.left, pre)
                 pre.right = None
+                print_right_edge(cur.left)
                 cur = cur.right
 
 
