@@ -59,7 +59,15 @@ c.一棵二叉树原本是搜索二叉树,但由于其中2个节点调换了位�
                 12.e1和e2都不是头节点,e1和e2谁都不是谁的父节点,e1是e1p的左孩子,e2是e2p的右孩子
                 13.e1和e2都不是头节点,e1和e2谁都不是谁的父节点,e1是e1p的右孩子,e2是e2p的左孩子
                 14.e1和e2都不是头节点,e1和e2谁都不是谁的父节点,e1是e1p的右孩子,e2是e2p的右孩子
-            主义：其中1-3头节点为e2,4-6头节点为e1
+            注意：其中1-3头节点为e2,4-6头节点为e1
+d.给定一个整形列表value_list,其中没有重复值,
+    普通：判断value_list是否可能是节点值类型为整型的搜索二叉树后序遍历结果
+        思路：
+            1.由于后续遍历可知列表最后一个节点值为头节点,将原列表分为比头节点小的左子树和比头节点大的右子树
+            2.判断左右字数是否符合搜索二叉树后续遍历规则
+    进阶：根据该value_list搜索二叉树后序遍历结果重建该搜索二叉树
+        思路：
+            1.由于后续遍历可知列表最后一个节点值为头节点,将原列表分为比头节点小的左子树和比头节点大的右子树
 """
 from binary_tree import Node
 import sys
@@ -451,6 +459,74 @@ def repair_sbt_with_two_error_nodes(tree):
                     e1p.right = e2
                     e2p.right = e1
     return tree
+
+
+def isSBTpostorder(value_list):
+    """
+    判断value_list是否可能是节点值类型为整型的搜索二叉树后序遍历结果
+    :type value_list:list
+    :param value_list:
+    :return:
+    """
+
+    def check(value, start, end):
+        """
+        判断子列表是否符合搜索二叉树后序遍历规则
+        :type value:list
+        :type start:int
+        :type end:int
+        :param value:
+        :param start:
+        :param end:
+        :return:
+        """
+        if start == end:
+            return True
+        little_end = 0
+        large_start = end
+        for i in range(start, end+1):
+            if value[i] < value[end]:
+                little_end = i
+            else:
+                large_start = i if large_start == end else large_start
+        if little_end != large_start-1:
+            return False
+        if little_end == 0 or large_start == end:
+            return check(value, start, end - 1)
+        return check(value, start, little_end) and check(value, large_start, end-1)
+
+    if value_list is None or len(value_list) == 0:
+        return False
+    return check(value_list, 0, len(value_list)-1)
+
+
+def rebuild_sbt_by_postorder(value_list):
+    """
+    利用搜索二叉树后序遍历结果重建搜索二叉树
+    :type value_list:list
+    :param value_list:
+    :return:
+    """
+
+    def rebuild(value, start, end):
+        if start > end:
+            return None
+        head = Node(value[end])
+        little_end = 0
+        large_start = end
+        for i in range(start, end+1):
+            if value[i] < value[end]:
+                little_end = i
+            else:
+                large_start = i if large_start == end else large_start
+        head.left = rebuild(value, start, little_end)
+        head.right = rebuild(value, large_start, end-1)
+        return head
+
+    if len(value_list)==0 or isSBTpostorder(value_list) is False:
+        return None
+    rebuild(value_list, 0, len(value_list)-1)
+
 
 if __name__ == "__main__":
     pass
