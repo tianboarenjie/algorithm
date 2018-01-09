@@ -15,3 +15,5 @@
 from .fibonacci import *
 from .path_sum import *
 from .coin import *
+from .sublist import *
+from .hanoi import *
