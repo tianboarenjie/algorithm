@@ -95,7 +95,7 @@ def longest_incremental_sublist_optimization(value):
         :param value:
         :return:
         """
-        auxilary = [1 for i in range(len(value))]
+        auxiliary = [1 for i in range(len(value))]
         ends = [0 for i in range(len(value))]
         ends[0] = value[0]
         right = 0
@@ -110,14 +110,13 @@ def longest_incremental_sublist_optimization(value):
                     r = m - 1
             right = max(right, l)
             ends[l] = value[i]
-            auxilary[i] = l + 1
-        return auxilary
+            auxiliary[i] = l + 1
+        return auxiliary
 
     if value is None or len(value) == 0:
         return 0
-    auxilary = get_auxiliary(value)
-    return generator_longest_incremental_sublist(value, auxilary)
-
+    auxiliary = get_auxiliary(value)
+    return generator_longest_incremental_sublist(value, auxiliary)
 
 
 if __name__ == "__main__":
