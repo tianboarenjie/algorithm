@@ -33,6 +33,7 @@ b.给定两个字符串value1和value2,返回两个字符串最长公共子串,v
             2.第一行第一列将本value的第一个字符（index=0）与另一子串依次比较,相等置1不等置0
             3.而后依次判断,判定dp[i][j],如果value1[i]与value[j]相等,则置dp[i][j]=dp[i-1][j-1]+1
         空间压缩动态规划
+            1.斜方向计算,dp[i][j]依赖dp[i-1][j-1]
 """
 
 
@@ -130,6 +131,43 @@ def longest_common_substr_classic(value1, value2):
                 end = i
                 length = dpRecords[i][j]
     return "".join(value1[end+1-length: end+1])
+
+
+def longest_common_substr(value1, value2):
+    """
+    获取value1和value2最长公共子串
+    :type value1:str
+    :type value2:str
+    :param value1:
+    :param value2:
+    :return:
+    """
+    if value1 is None or value2 is None or len(value1) == 0 or len(value2) == 0:
+        return ""
+    row = 0
+    col = len(value2)-1
+    maxLen = 0
+    end = 0
+    # 从右到左,从上到下,每次遍历都是斜向右下
+    while row < len(value1):
+        i = row
+        j = col
+        length = 0
+        while i < len(value1) and j < len(value2):
+            if value1[i] != value2[j]:
+                length = 0
+            else:
+                length += 1
+            if length > maxLen:
+                maxLen = length
+                end = i
+            i += 1
+            j += 1
+        if col > 0:
+            col -= 1
+        else:
+            row += 1
+    return "".join(value1[end+1-maxLen:end+1])
 
 
 if __name__ == "__main__":
