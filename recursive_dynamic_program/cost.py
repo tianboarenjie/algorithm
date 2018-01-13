@@ -29,7 +29,7 @@ a.给定两个字符串value1和value2,再给定三个整数ic,dc和rc,分别代
             4)value1[0...i-1]先编辑成value2[j-2],然后将value2[j-2]插入value2[j-1]编辑成value2[0...j-1],
               这种情况下dp[i][j]=id+dp[i][j-1]
     空间压缩动态规划
-        1.由上面可知,可将dp二维压缩为一维,将dp长度设为min(len(value1)N,len(value2)M),如果value1长度更小,将对应插入删除对换一下
+        1.由上面可知,可将dp二维压缩为一维,将dp长度设为min(len(value1)N,len(value2)M),如果value1长度更短,将对应插入删除对换一下
 """
 
 
