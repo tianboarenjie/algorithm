@@ -28,6 +28,12 @@ a.给定三个字符串value1,value2,aim,如果aim包含且仅包含value1和val
               说明value2[j-1]可以作为交错组成aim[0...i+j-1]最后一个字符,此时dp[i][j]=True
             3）其他情况dp[i][j]=False
     空间压缩动态规划：参考cost
+b.给定无序列表value,返回其中最长的连续列表长度,example:value=[100,4,200,1,3,2]  最长连续序列为[1,2,3,4],返回4
+    思路：
+        1.利用字典map{value:length}保存value这个数在最长连续序列中的长度,maxLen保存全局最长连续子序列
+        2.如果map中没有value,则将value:1插入map中
+        3.如果map中存在value-1,得到这个连续序列最小值leftA,最大值rightA,得到序列长度lengthA,更新leftA和rightA的值,更新maxLen
+        4.如果map存在value+1,仿照3更新
 """
 
 
@@ -94,6 +100,46 @@ def is_interlude_str_dynamic_space_compression(value1, value2, aim):
             else:
                 dp[j] = False
     return dp[len(shorter)]
+
+
+def longest_consecutive_sublist(value):
+    """
+    无序列表中最长连续列表长度
+    :type value:list
+    :param value:
+    :return:
+    """
+
+    def merge(map, less, more):
+        """
+        合并列表返回新连续列表长度
+        :type map:dict
+        :type less:int
+        :type more:int
+        :param map:
+        :param less:
+        :param more:
+        :return:
+        """
+        left = less - map.get(less) + 1
+        right = more + map.get(more) - 1
+        length = right - left + 1
+        map[left] = length
+        map[right] = length
+        return length
+
+    if not value or len(value) == 0:
+        return 0
+    maxLen = 0
+    map = {}
+    for i in range(len(value)):
+        if not map.get(value[i]):
+            map[value[i]] = 1
+            if map.get(value[i]-1):
+                maxLen = merge(map, value[i]-1, value[i])
+            if map.get(value[i]+1):
+                maxLen = merge(map, value[i], value[i]+1)
+    return maxLen
 
 
 if __name__ == "__main__":

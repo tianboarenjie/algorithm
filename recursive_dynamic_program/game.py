@@ -33,6 +33,9 @@ b.给定一个整数列表value,代表数值不同的纸牌排成一条线.玩�
             min(front(i+1,j),front(i,j-1))
     动态规划
         1.利用front[i][j]记录暴力递归中front(value,i,j)返回值,follow记录暴力递归中follow(value,i,j)返回值
+c.给定列表value,value[i]=k代表可以从位置i向右跳跃1～k个距离,例如value[2]=3代表可以从位置2跳跃到位置3,位置4,位置5,如果从位置0出发,返回最少
+  跳跃几次可以到最后位置,时间复杂度O(N),额外空间复杂度O(1)
+    思路：
 """
 
 
@@ -153,6 +156,25 @@ def card_dynamic(value):
             front[j][i] = max(value[j]+follow[j+1][i], value[i]+follow[j][i-1])
             follow[j][i] = min(front[j+1][i], front[j][i-1])
     return max(front[0][-1], follow[0][-1])
+
+
+def jump_step(value):
+    """
+    :type value:list
+    :param value:
+    :return:
+    """
+    if not value or len(value) == 0:
+        return 0
+    jump = 0
+    cur = 0
+    follow = 0
+    for i in range(len(value)):
+        if cur < i:
+            jump += 1
+            cur = follow
+        follow = max(follow, i+value[i])
+    return jump
 
 
 if __name__ == "__main__":
