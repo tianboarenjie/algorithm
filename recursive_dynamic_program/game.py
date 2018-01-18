@@ -36,6 +36,11 @@ b.给定一个整数列表value,代表数值不同的纸牌排成一条线.玩�
 c.给定列表value,value[i]=k代表可以从位置i向右跳跃1～k个距离,例如value[2]=3代表可以从位置2跳跃到位置3,位置4,位置5,如果从位置0出发,返回最少
   跳跃几次可以到最后位置,时间复杂度O(N),额外空间复杂度O(1)
     思路：
+d.N皇后问题是指在N*N的棋盘上要摆N的皇后,要求任何两个皇后不能同行,不能同列,也不能在同一条斜线上.给定一个正数n,返回n皇后的摆法有多少种
+    常规解法思路：
+        1.如果在(i,j)放置了一个皇后,思考那些位置不能再放
+            首先第i行不能放置,其次第j列不能防止,再有位置(a,b)满足|a-i|==|b-j|,表明在同一斜线也不行
+        2.用列表records[i]表示第i行放置的皇后所在列数
 """
 
 
@@ -175,6 +180,56 @@ def jump_step(value):
             cur = follow
         follow = max(follow, i+value[i])
     return jump
+
+
+def queen_classic(n):
+    """
+    常规方法求解n皇后问题
+    :type n:int
+    :param n:
+    :return:
+    """
+
+    def is_valid(records, i, j):
+        """
+        判断是否可以摆放
+        :type records:list
+        :type i:int
+        :type j:int
+        :param records:
+        :param i:
+        :param j:
+        :return:
+        """
+        for k in range(i):
+            if j == records[k] or abs(records[k]-j) == abs(i-k):
+                return False
+        return True
+
+    def process(index, records):
+        """
+        计算位置
+        :type index:int
+        :type records:list
+        :type end:int
+        :param index:
+        :param records:
+        :param end:
+        :return:
+        """
+        if index == len(records):
+            return 1
+        result = 0
+        for i in range(len(records)):
+            if is_valid(records, index, i):
+                records[index] = i
+                result += process(index + 1, records)
+        return result
+
+    if n < 1:
+        return 0
+    records = [-1 for i in range(n)]
+    return process(0, records)
 
 
 if __name__ == "__main__":
