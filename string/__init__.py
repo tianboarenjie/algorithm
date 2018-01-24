@@ -16,3 +16,4 @@ from .comparision import *
 from .substr import *
 from .conversion import *
 from .regularization import *
+from .statistic import *
