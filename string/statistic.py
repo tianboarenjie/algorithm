@@ -7,7 +7,7 @@
 @License:           GPL Licence  
 @Contact:           tianbaorenjie@163.com
 @Site:              https://github.com/tianbaorenjie 
-@Software:          PyCharm 
+@Software:          PyCharm
 @Project:           py363_algorithm
 @File:              statistic.py 
 @Time:              18-1-25 上午12:00 
@@ -15,6 +15,7 @@
 """
 a.给定一个字符串str1,返回str1的统计字符串,例如'aaaabbadddffc'的统计字符串为'a_4_b_2_a_1_d_3_f_2_c_1'
 b.给定一个a中统计字符串cStr,一个整数index,返回cStr表示原始字符串上的第index个字符
+c.给定一个字符串,判断串中是否所有字符都只出现一次
 """
 
 
@@ -65,6 +66,23 @@ def get_char_at(cStr, index):
         else:
             num = num*10 + int(cStr[i])
     return result if (counts+num)>index else ""
+
+
+def is_unique(cStr):
+    """
+    字符串中字符是否唯一
+    :type cStr:str
+    :param cStr:
+    :return:
+    """
+    if not cStr:
+        return True
+    tmp = ""
+    for i in cStr:
+        if i in tmp:
+            return False
+        tmp += i
+    return True
 
 
 if __name__ == "__main__":
