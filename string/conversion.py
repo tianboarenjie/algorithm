@@ -34,6 +34,18 @@ c.在b的基础上,在给定str1的最长回文子序列str1lps,请返回在添�
         2.类似剥洋葱方法,第0层为str1lps[0]和str1lps[M-1]组成,从str1左侧开始找第一个字符为str1lps[0],最左侧到这个字符记为leftPart,从str1右侧开始找
           第一个str1lps[M-1],最右侧到这个字符记为rightPart,则洋葱第0层左侧为leftPart+rightPart+str1lps[0],洋葱第0层右侧为str1lps[M-1]+rightPart+leftPart
         3.依次,直到str1lps查找完毕
+d.给定字符串str1,判断是不是整体有效的括号字符串
+    思路：
+        1.由左至右遍历,判断每一个字符是否是'('或')',如果不是,直接False
+        2.统计'('数量,记为counts,如果字符是')',则counts-1,判断最终counts是否是0
+e.给定一个字符串str1,返回最长的有效括号字符
+    思路：
+        1.需要使用动态规划方法,动态规划表dp[i]表示str1[0...i]字符串中以str1[i]结尾的最长有效子串长度
+        2.dp[0]=0,由左至右遍历str1[1...-1],根据不同情况赋值dp[i]
+            a)str1[i]=='(',有效字符串必须以')'结尾,故此dp[i]=0
+            b)str1[i]==')',则str1[i]结尾的最长有效子串可能存在,dp[i-1]表示str1[i-1]结尾的最长有效括号子串长度,pre记为i-dp[i-1]-1,如果str1上pre(>=0)位置为'(',
+              则恰好可以配出一对有效括号,dp[i]=dp[i-1]+2+(dp[pre-1] if pre else 0)
+              
 """
 
 
@@ -203,6 +215,46 @@ def get_palindrome_by_substr(str1, str1lps):
         lpsLeft += 1
         lpsRight -= 1
     return "".join(res)
+
+
+def is_effective_bracket(str1):
+    """
+    判断括号是否有效
+    :type str1:str
+    :param str1:
+    :return:
+    """
+    if not str1 or str1 == "":
+        return False
+    counts = 0
+    for i in range(len(str1)):
+        if str1[i] not in "()":
+            return False
+        if str1[i] == "(" and counts >= 0:
+            counts += 1
+        if str1[i] == ")" and counts >= 0:
+            counts -= 1
+    return counts == 0
+
+
+def max_length_effective_bracket(str1):
+    """
+    最长有效括号子串
+    :type str1:str
+    :param str1:
+    :return:
+    """
+    if not is_effective_bracket(str1):
+        return 0
+    dp = [0 for i in range(len(str1))]
+    res = 0
+    for i in range(1, len(str1)):
+        if str1[i] == ")":
+            pre = i - dp[i-1] - 1
+            if pre>=0 and str1[pre] == "(":
+                dp[i] = dp[i-1] + 2 + (dp[pre-1] if pre else 0)
+        res = max(dp[i], res)
+    return res
 
 
 if __name__ == "__main__":
