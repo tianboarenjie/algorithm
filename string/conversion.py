@@ -30,8 +30,11 @@ b.给定一个字符串str1,如果可以在str1的任意位置添加字符,请�
         
 c.在b的基础上,在给定str1的最长回文子序列str1lps,请返回在添加字符最少的情况下,让str1整体都是回文字符串的一种结果
     思路：
+        1.str1长度为N,str1lps长度为M,则可知回文字符串长度为2×N-M
+        2.类似剥洋葱方法,第0层为str1lps[0]和str1lps[M-1]组成,从str1左侧开始找第一个字符为str1lps[0],最左侧到这个字符记为leftPart,从str1右侧开始找
+          第一个str1lps[M-1],最右侧到这个字符记为rightPart,则洋葱第0层左侧为leftPart+rightPart+str1lps[0],洋葱第0层右侧为str1lps[M-1]+rightPart+leftPart
+        3.依次,直到str1lps查找完毕
 """
-import sys
 
 
 def convert_integer(str1):
@@ -129,7 +132,77 @@ def get_palindrome(str1):
             i += 1
     return "".join(res)
 
-    pass
+
+def get_palindrome_by_substr(str1, str1lps):
+    """
+    通过在任意位置插入最少字符使得str1成为回文,返回该回文
+    :type str1:str
+    :type str1lps:str
+    :param str1:
+    :param str1lps:
+    :return:
+    """
+
+    def set_result(res, resLeft, resRight, str1, leftStart, leftEnd, rightStart, rightEnd):
+        """
+        设置result
+        :type res:list
+        :type resLeft:int
+        :type resRight:int
+        :type str1:str
+        :type leftStart:int
+        :type leftEnd:int
+        :type rightStart:int
+        :type rightEnd:int
+        :param res:
+        :param resLeft:
+        :param resRight:
+        :param str1:
+        :param leftStart:
+        :param leftEnd:
+        :param rightStart:
+        :param rightEnd:
+        :return:
+        """
+        for i in range(leftStart, leftEnd+1):
+            res[resLeft] = str1[i]
+            res[resRight] = str1[i]
+            resLeft += 1
+            resRight -= 1
+        for i in range(rightEnd, rightStart-1, -1):
+            res[resLeft] = str1[i]
+            res[resRight] = str1[i]
+            resLeft += 1
+            resRight -= 1
+
+    if not str1 or str1 == "" or not str1lps or str1lps == "":
+        return ""
+    res = ["" for i in range(len(str1) + len(str1lps))]
+    str1Left = 0
+    str1Right = len(str1) - 1
+    lpsLeft = 0
+    lpsRight = len(str1lps) - 1
+    resLeft = 0
+    resRight = len(res) - 1
+    while lpsLeft <= lpsRight:
+        tmpLeft = str1Left
+        tmpRight = str1Right
+        while str1[str1Left] != str1lps[resLeft]:
+            str1Left += 1
+        while str1[str1Right] != str1lps[resRight]:
+            str1Right -= 1
+        set_result(res, resLeft, resRight, str1, tmpLeft, str1Left, tmpRight, str1Right)
+        resLeft += str1Left - tmpLeft + tmpRight - str1Right
+        resRight -= str1Left - tmpLeft + tmpRight - str1Right
+        res[resLeft] = str1[str1Left]
+        res[resRight] = str1[str1Right]
+        resLeft += 1
+        str1Left += 1
+        resRight -= 1
+        str1Right -= 1
+        lpsLeft += 1
+        lpsRight -= 1
+    return "".join(res)
 
 
 if __name__ == "__main__":
