@@ -22,6 +22,10 @@ d.给定一个字符串列表valueList,再给定两个字符串str1和str2,返�
         1.变量last1记录最后一个出现str1的位置,last2记录最后一次出现str2的位置
         2.minDistance每次判断都更新,只要last1和last2都不为-1时才更新为新值,利用
           类似min（minDistance, minDistance if last1!=-1 else index-last1）更新minDistance
+e.给定一个字符串str1,str1表示一个公式,公式里可能有整数,加减乘除符号和左右括号,返回公式里的计算结果.
+    思路：假设str1一定是正确公式且合法
+        1.采用递归方式,遍历str1,最初str1整个都在递归中,遇到'('后将'('后放入新递归中,遇到')'或是str1遍历完成递归结束
+        2.要判定递归结果是否为负数,如果是负数需要用括号括起来
 """
 
 
@@ -117,6 +121,85 @@ def min_distance(valueList, str1, str2):
             minDistance = min(minDistance, minDistance if last1 == -1 else abs(index-last1))
             last2 = index
     return minDistance if minDistance != -2 else -1
+
+
+def result_from_expression(expStr):
+    """
+    通过expStr字符串得到字符串所代表表达式的值
+    :type expStr:str
+    :param expStr:
+    :return:
+    """
+
+    def value(exp, index):
+        """
+        递归函数,消除exp总的括号,但遇到(时进入新的递归,返回表达式所代表的值以及遍历的下一个位置
+        :type exp:str
+        :type index:int
+        :param exp:
+        :param index:
+        :return:
+        """
+        dep = []
+        pre = 0
+        while index < len(exp) and exp[index] != ")":
+            if exp[index] >= "0" and exp[index] <= "9":
+                pre = pre*10 + int(exp[index])
+                index += 1
+            elif exp[index] != "(":
+                add_num(dep, pre)
+                dep.append(exp[index])
+                index += 1
+                pre = 0
+            else:
+                tmp = value(exp, index+1)
+                pre = tmp[0]
+                index = tmp[1] + 1
+        add_num(dep, pre)
+        return calculate(dep), index
+
+    def add_num(dep, num):
+        """
+        通过向dep列表添加num,得到表达式各独立元素组成的列表(计算乘除法)
+        :type dep:list
+        :type num:int
+        :param dep:
+        :param num:
+        :return:
+        """
+        if dep:
+            top = dep.pop()
+            if top in "-+":
+                dep.append(top)
+            else:
+                cur = int(dep.pop())
+                num = cur*num if top == "*" else cur/num
+        dep.append(num)
+
+    def calculate(dep):
+        """
+        遍历dep列表得到表达式各元素,计算该表达式最后结果
+        :type dep:list
+        :param dep:
+        :return:
+        """
+        add = True
+        res = 0
+        while dep:
+            cur = dep.pop(0)
+            if cur == "+":
+                add = True
+            elif cur == "-":
+                add = False
+            else:
+                cur = int(cur)
+                res += cur if add else -cur
+        return res
+
+    if not expStr or expStr == "":
+        return 0
+    return value(expStr, 0)[0]
+
 
 
 if __name__ == "__main__":
