@@ -26,6 +26,10 @@ e.给定一个字符串str1,str1表示一个公式,公式里可能有整数,加�
     思路：假设str1一定是正确公式且合法
         1.采用递归方式,遍历str1,最初str1整个都在递归中,遇到'('后将'('后放入新递归中,遇到')'或是str1遍历完成递归结束
         2.要判定递归结果是否为负数,如果是负数需要用括号括起来
+f.给定一个整数N,求出'0'和'1'字符组成的长度为N的所有字符串中,满足'0'字符的左边必须有'1'的字符串数量
+    思路：
+        1.思考可知N=1时为1,N=2时为2,R(N)表示满足条件的字符串数量Fi表示满足此条件字符的i位置字符
+        2.字符串位置i为0...N-1,,F0可知必须为1,F1=1时,满足条件的有F(N-1),F1=0时,满足条件的有F(N-2)
 """
 
 
@@ -200,6 +204,25 @@ def result_from_expression(expStr):
         return 0
     return value(expStr, 0)[0]
 
+
+def sum_of_zero_left_one(num):
+    """
+    给定一个整数num,求出'0'和'1'字符组成的长度为num的所有字符串中,满足'0'字符的左边必须有'1'的字符串数量
+    :type num:int
+    :param num:
+    :return:
+    """
+    if not num or num < 1:
+        return 0
+    if num == 1:
+        return 1
+    pre = 1
+    cur = 2
+    for i in range(2, num):
+        tmp = cur
+        cur += pre
+        pre = tmp
+    return cur
 
 
 if __name__ == "__main__":
