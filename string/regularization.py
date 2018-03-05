@@ -19,6 +19,9 @@ a.给定三个字符串,str1,fro,to,已知fro字符串中无重复字符,把str1
         2.如果str1[i]==fro[match],且match是fro最后一个字符位置,表示str1中匹配到了fro,则str1List[i]前面N个位置置为''
         3.如果str1[i]!=fro[match],表示不匹配,match置为0
         4.最后将str1List转换字符串,其中连续''字符转换为一个to字符串
+b.给定一个字符串类型列表,请找出一种拼接顺序,使得将所有字符串拼接起来组成的字符串是所有可能性中字典顺序最小的,并返回这个字符串
+    思路：
+        1.假设两个字符分别为a,b,a和b拼接可以是a.b也可以是b.a,如果a.b的字典顺序小于b.a,则a放在前面,按照这个标准比较
 """
 
 
@@ -72,6 +75,19 @@ def replace(str1, fro, to):
             result = result + to
     return result
 
+
+def lowest_str(valueList):
+    """
+    将valueList列表中所有元素拼接,返回字典顺序最小的拼接结果
+    :type valueList:list
+    :param valueList:
+    :return:
+    """
+    if not valueList or valueList == "":
+        return ""
+    from functools import cmp_to_key
+    tmp = sorted(valueList, key=cmp_to_key(lambda x,y: 1 if x+y > y+x else -1))
+    return "".join(tmp)
 
 
 

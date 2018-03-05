@@ -30,6 +30,8 @@ f.给定一个整数N,求出'0'和'1'字符组成的长度为N的所有字符串
     思路：
         1.思考可知N=1时为1,N=2时为2,R(N)表示满足条件的字符串数量Fi表示满足此条件字符的i位置字符
         2.字符串位置i为0...N-1,,F0可知必须为1,F1=1时,满足条件的有F(N-1),F1=0时,满足条件的有F(N-2) 
+g.给定一个字符串value,value一定是若干新类型字符正确组合结果,再给定一个整型index,代表value中位置,返回value中index位置指中的新类型字符
+    新类型字符长度可为1也可为2,新类型字符可以是消协字母,大写字母加小写字母,大写字母加大写字母
 """
 
 
@@ -224,6 +226,28 @@ def sum_of_zero_left_one(num):
         pre = tmp
     return cur
 
+
+def newstr_index(value, index):
+    """
+    返回value中index位置的新类型字符
+    :type value:str
+    :type index:int
+    :param value:
+    :param index:
+    :return:
+    """
+    if not value or value == "" or index < 0 or index >= len(value):
+        return ""
+    upNum = 0
+    for i in range(index-1, 0, -1):
+        if value[i].islower():
+            break
+        upNum += 1
+    if upNum&1 == 1:
+        return value[index-1: index+1]
+    if value[index].isupper():
+        return value[index: index+2]
+    return value[index]
 
 if __name__ == "__main__":
     pass
