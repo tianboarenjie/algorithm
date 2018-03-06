@@ -25,6 +25,14 @@ c.给定一个字符串value,返回value的最长无重复字符子串的长度,
             a)pre+1为在value[i-1]结尾情况下最长无重复子串开始位置
             b)如果pre在a左边,则以value[i]结尾最长无重复子串为value[a+1...i]
             c)如果pre在a右边,则以value[i]结尾最长无重复子串为value[pre+1...i]
+d.给定字符串value1和value2,求value1子串中含有value2所有字符的最小子串长度
+    思路：
+        1.借助几个变量
+            left：遍历value1时,value1[left...right]表示框住的子串,left为左边界
+            right:如上阐述right为右边界
+            match：记录在value1[left...right]子串中一共欠value2多少个字符,可谓负数
+            minLen:记录最小包含子串长度
+        2.利用tmp字典记录value1欠value2相应字符的个数
 """
 
 
@@ -105,6 +113,43 @@ def max_unique_substr(value):
         result = max(result, i-pre)
         indexDict[value[i]] = i
     return result
+
+
+def min_substr_length(value1, value2):
+    """
+    value1子串中含有value2所有字符的最小子串长度
+    :type value1:str
+    :type value2:str
+    :param value1:
+    :param value2:
+    :return:
+    """
+    if not value1 or not value2 or len(value2) > len(value1):
+        return 0
+    import sys
+    tmp = [0 for i in range(256)]
+    for i in range(len(value2)):
+        tmp[ord(value2[i])] += 1
+    left = 0
+    right = 0
+    match = len(value2)
+    minLen = sys.maxsize
+    while right != len(value1):
+        tmp[ord(value1[right])] -= 1
+        if tmp[ord(value1[right])] >= 0:
+            match -= 1
+        if match == 0:
+            while tmp[ord(value1[left])] < 0:
+                tmp[ord(value1[left])] += 1
+                left += 1
+            minLen = min(minLen, right-left+1)
+            match += 1
+            tmp[ord(value1[left])] += 1
+            left += 1
+        right += 1
+    return minLen if minLen != sys.maxsize else 0
+
+
 
 if __name__ == "__main__":
     pass
