@@ -4,7 +4,7 @@
 """ 
 @Version:           v1.0 
 @Author:            tianbaorenjie
-@License:           GPL Licence  
+@License:           GPL license  
 @Contact:           tianbaorenjie@163.com
 @Site:              https://github.com/tianbaorenjie 
 @Software:          PyCharm 
